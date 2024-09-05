@@ -293,8 +293,6 @@ if __name__ == '__main__':
     for apk_file in apk_files:
         # 处理逻辑
         i = i +1
-        if(i<=972):
-            continue
         print "A total of "+ str(num) +" apk tapes are analyzed, and " + str(i) + " is in progress......"
         print('Processing:', apk_file)
         current_time = datetime.datetime.now()
