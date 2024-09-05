@@ -12,15 +12,15 @@ import datetime
 def start_frida_server():
     
     cmd = ['adb', 'shell', 'su', '0', './data/local/tmp/frida-server-16.2.1-android-x86_64', '&']
-    # 启动进程
+    
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
     cmd = ['adb', 'shell', 'su', '0', './data/local/tmp/gdbserver', '-l', '0.0.0.0:13099', '&']
-    # 启动进程
+    
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
     cmd = ['adb', 'shell', 'su', '0', './data/local/tmp/jdb', '-l', '0.0.0.0:13100', '&']
-    # 启动进程
+    
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     
     
@@ -77,7 +77,7 @@ def execute_acv_instrument(apk_file):
         if pickle_file and apk_instrumented and package_name:
             return pickle_file, apk_instrumented, package_name
         else:
-            # 执行一次失败后重试一次
+            
             output,_,_ = execute_command(command)
             if output:
                 lines = output.split('\n')
@@ -174,25 +174,25 @@ def acv_runtime_analysis(package_name, pickle_file):
     
     
     
-    # 打开命令行1，执行命令acv start com
+    
     cmd1 = "start /B acv start "+ package_name +" > output.txt 2>&1"
     print "cmd1, ",cmd1
     process1 = subprocess.Popen(cmd1, shell=True)
-    process1.wait()  # 等待进程结束
+    process1.wait()  
     i = 0
     while True:
-        # 检查命令行1输出是否包含特定条件1
+        
         if process1.poll() is None:
-            time.sleep(2)  # 等待两秒再次检查
+            time.sleep(2)  
             continue
         
         with open('output.txt', 'rU') as file:
             try:
-                # 尝试获取文件锁定
-                #msvcrt.locking(file.fileno(), msvcrt.LK_LOCK, 1)
+               
+                
                 output = file.read()
                 if 'INSTRUMENTATION_CODE: 0' in output or "Lock file exists for some reason" in output:
-                    # 当返回INSTRUMENTATION_CODE: 0时，重新执行命令
+                    
                     process1.terminate()
                     process1 = subprocess.Popen(cmd1, shell=True)
                     process1.wait()  # 等待进程结束
@@ -203,12 +203,12 @@ def acv_runtime_analysis(package_name, pickle_file):
                         return "False"
                     print("i =", i)
                     continue
-                # 释放文件锁定
-                #msvcrt.locking(file.fileno(), msvcrt.LK_UNLOCK, 1)
+                
+
                 break
             except Exception as e:
                 print("An error occurred:", e)
-                # 文件被锁定，等待下次循环继续尝试
+                
                 continue
                 
                 
@@ -221,7 +221,7 @@ def acv_runtime_analysis(package_name, pickle_file):
     #cmd0 = "adb shell am force-stop com.rngamingstudio.icecream.sundae.maker"
     #output, _, _ = execute_command(cmd0)
     
-    # 打开命令行2，执行adb shell monkey命令
+    
     cmd2 = 'adb shell monkey -p '+ package_name +' --throttle 500 --pct-touch 80 --pct-motion 20  --pct-appswitch 0 -v 500'
     print "cmd2 ",cmd2
     output, std, err= execute_command(cmd2)
@@ -258,7 +258,7 @@ def write_to_csv(filename, sha256, column, value):
         csv_reader = csv.reader(file)
         csv_data = list(csv_reader)
         
-        # 查找指定SHA256所在行的索引
+        
         for row in csv_data:
             if row[0] == sha256.upper():
                 row[column] = value
@@ -276,7 +276,7 @@ def clean_repDirectory(target_directory):
 
 
 if __name__ == '__main__':
-    # 获取目标目录下所有的apk文件
+    
     target_directory = '0424'
     #target_directory = 'test'
     reportPath = "C:\\Users\\dfpp125\\acvtool\\acvtool_working_dir\\report\\"
@@ -289,17 +289,16 @@ if __name__ == '__main__':
     start_frida_server()
     
 
-    #     对每个apk文件进行处理
+    
     for apk_file in apk_files:
-        # 处理逻辑
+        
         i = i +1
         print "A total of "+ str(num) +" apk tapes are analyzed, and " + str(i) + " is in progress......"
         print('Processing:', apk_file)
         current_time = datetime.datetime.now()
         current_time_str = current_time.strftime("%Y-%m-%d %H:%M:%S")
         print(current_time_str)
-        apk_file_no_suffix = apk_file[:-4]  # 去掉.apk后缀
-        # 这里可以添加你的处理代码
+        apk_file_no_suffix = apk_file[:-4]  
         
         isDo = True
         
@@ -308,7 +307,7 @@ if __name__ == '__main__':
                 reader = csv.reader(file)
                 for row in reader:
                     if not row:
-                        # 跳过空行
+                        
                         continue
                     if row[0] == apk_file_no_suffix:
                         count = int(row[1])
@@ -316,7 +315,7 @@ if __name__ == '__main__':
                             Falsenum = Falsenum +1
                             isDo = False
                             print('InstrumentFailCount:', count)
-                           #失败次数过多 不考虑
+                          
                             break
                     
             if not isDo:
@@ -326,7 +325,6 @@ if __name__ == '__main__':
                 reader = csv.reader(file)
                 for row in reader:
                     if not row:
-                        # 跳过空行
                         continue
                     if row[0] == apk_file_no_suffix:
                         count = int(row[1])
@@ -334,7 +332,7 @@ if __name__ == '__main__':
                             Falsenum = Falsenum +1
                             isDo = False
                             print('RuntimeFailCount:', count)
-                           #失败次数过多 不考虑
+                           
                             break
                     
             if not isDo:
@@ -344,10 +342,10 @@ if __name__ == '__main__':
                 reader = csv.reader(file)
                 for row in reader:
                     if not row:
-                        # 跳过空行
+                       
                         continue
                     if row[0] == apk_file_no_suffix and row[14]:
-                        #已经分析过  不在分析
+                        
                         isDo = False
                         #print('row[8]', row[8])
                         break
@@ -384,7 +382,7 @@ if __name__ == '__main__':
                 if not found:
                     content.append([apk_file_no_suffix, "1"])
 
-                with open('failInstrumentApk.csv', 'wb') as file:  # 使用'wb'模式写入文件
+                with open('failInstrumentApk.csv', 'wb') as file:  
                     writer = csv.writer(file)
                     writer.writerows(content)
 
@@ -397,7 +395,7 @@ if __name__ == '__main__':
             #package_name = u'com.rngamingstudio.icecream.sundae.maker' 
             #pickle_file = "/home/suodewen/acvtool/acvtool_working_dir/metadata/0A59F7A87BEDFB59EC8BB3C42884A3FC453430FB0666DFEA8BFDE2EA543D3ED4.pickle"
 
-            #分析
+            
             result = acv_runtime_analysis(package_name, pickle_file)
             filename = "0424.csv"
             sha256 = apk_file.rsplit('.', 1)[0]
@@ -407,11 +405,11 @@ if __name__ == '__main__':
                 Falsenum = Falsenum +1
                 time.sleep(2)
                 try:
-                    #第8列是 是否成功
+                    
                     #write_to_csv(filename,sha256,8,"false")
                     acv_uninstall_apk(package_name)
                 except Exception as e:
-                    # 捕获错误，并输出错误信息
+                    
                     print("An error occurred:", e)
                     
 
@@ -421,7 +419,7 @@ if __name__ == '__main__':
                 try:
                     print("Fill code coverage")
                     
-                    #第9列是  不经过动态工具处理时  代码覆盖率是多少
+                   
                     print("Fill code coverage11111")
                     curReportPath = reportPath + package_name + "\\report\\index.html"
                     print("Fill code coverage22222")
@@ -432,7 +430,7 @@ if __name__ == '__main__':
                     acv_uninstall_apk(package_name)
                 
                 except Exception as e:
-                    # 捕获错误，并输出错误信息
+                    
                     print("An error occurred:", e)
             print("Clean up temporary files")
             clean_repDirectory("C:\\Users\\dfpp125\\acvtool\\acvtool_working_dir")
@@ -448,10 +446,10 @@ if __name__ == '__main__':
 
 
         except Exception as e:
-            # 捕获到异常，执行相应的处理逻辑
+            
             print('An error occurred:', e)
             found = False
-            with open('failRuntimeApk.csv', 'rb') as file:  # 使用'rb'模式打开文件
+            with open('failRuntimeApk.csv', 'rb') as file:  
                 reader = csv.reader(file)
                 content = list(reader)
                 
@@ -479,10 +477,10 @@ if __name__ == '__main__':
     print str(num - Falsenum)+ " APKs were successfully analyzed and "+str(Falsenum)+" failed"
     end_time = time.time()
 
-    # 计算执行时间
+    
     execution_time = end_time - start_time
 
-    # 打印执行时间
+    
     print("Execution time: {} seconds".format(execution_time))
 
     
