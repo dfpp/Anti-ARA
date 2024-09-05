@@ -195,7 +195,7 @@ def acv_runtime_analysis(package_name, pickle_file):
                     
                     process1.terminate()
                     process1 = subprocess.Popen(cmd1, shell=True)
-                    process1.wait()  # 等待进程结束
+                    process1.wait()  
                     print("Attempt to reanalyze")
                     i = i+1
                     
@@ -368,7 +368,7 @@ if __name__ == '__main__':
                 Falsenum = Falsenum +1
                
                 found = False
-                with open('failInstrumentApk.csv', 'rb') as file:  # 使用'rb'模式打开文件
+                with open('failInstrumentApk.csv', 'rb') as file:
                     reader = csv.reader(file)
                     content = list(reader)
                     
