@@ -21,4 +21,32 @@ To facilitate reproducibility, you can obtain the corresponding APK samples by u
 This setup allows you to replicate the experiments and evaluate the effectiveness of dynamic analysis tools in handling ARA technologies.
 
 
+# Investigated Tools Overview
+
+In this section, we provide an overview of all the investigated dynamic analysis tools. The tools are categorized based on their availability, relevance, and the reasons why they were selected or excluded from the study.
+
+# Investigated Tools Overview
+
+In this section, we provide an overview of all the investigated dynamic analysis tools. The tools are categorized based on their availability, relevance, and the reasons why they were selected or excluded from the study.
+
+## Tools Summary
+
+| **Category**                          | **Tool Name**                                                                 |
+|---------------------------------------|-------------------------------------------------------------------------------|
+| **Not Available**                     | TaintART, De-LADY, DL-Droid, DirectDroid, EnDroid, Droid-AntiRM, Ninja, Bolt, SMARTGEN, Deep4maldroid, Harvester, ARTist, DroidADDMiner, Dagger, Boxify, Droid-sec, DroidTrace, DroidTrack, SCSdroid, VetDroid, MADAM, ProfileDroid, Crowdroid, CRePE, Dexmonitor, GroddDroid, juGULAR, AppsPlayground, Puma, TriggerScope, Difuzer, Curiousdroid |
+| **Not Relevant to Dynamic Analysis**  | Humanoid, ADAMANT, EHBDroid, Stoat, DroidBot, IntelliDroid, Dynodroid, Monkey, Active, Flowdroid, sapienz |
+| **Cannot Be Reproduced / Not Working**| TaintDroid, DroidHook, CuckooDroid, FuzzDroid, Malton, Maline, BareDroid, ConDroid, AndroidHooker, SwiftHand, DroidScope, AppAudit, NDroid |
+| **Links Inaccessible**                | ARTDroid, Copperdroid, EvoDroid                                               |
+| **Selected Tools**                    | DroidDissector, DroidCat, APIMonitor, ESdroid, AndroidSlicer, T-Recs           |
+
+## Further Explanation
+
+- **Not Available**: These tools were included in the original investigation but could not be used due to unavailability. Some of them are no longer maintained, or the authors did not provide any working links.
+- **Not Relevant**: These tools were excluded from our study because they do not align with the focus and scope of this research.
+- **Cannot Be Reproduced / Not Working**: We encountered issues when trying to reproduce the results using these tools. They failed to work on our setup, and therefore could not be used in the study.
+- **Links Inaccessible**: Some tools had broken or outdated access links, making it impossible to download and use them.
+- **Selected Tools**: These are the tools that we ultimately selected for our study.
+
+
+
 
