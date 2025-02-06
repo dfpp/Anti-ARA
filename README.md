@@ -20,7 +20,5 @@ To facilitate reproducibility, you can obtain the corresponding APK samples by u
 
 This setup allows you to replicate the experiments and evaluate the effectiveness of dynamic analysis tools in handling ARA technologies.
 
-## Further Details
 
-If you have any questions or need additional clarification, please refer to the relevant sections of our paper or contact us directly.
 
