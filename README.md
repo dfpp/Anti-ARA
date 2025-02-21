@@ -4,7 +4,7 @@ This framework is used to measure the ability of dynamic analysis tools to resis
 
 ## Dataset and Reproducibility
 
-The dataset used in our study consists of 1,000 benign and 1,000 malicious Android APKs. The analysis reports for each sample are available in the `Dataset` folder in this repository. 
+The dataset used in our study consists of 993 benign and 991 malicious Android APKs. The analysis reports for each sample are available in the `Dataset` folder in this repository. 
 
 To facilitate reproducibility, you can obtain the corresponding APK samples by using the unique hash values of each sample, which are provided in the analysis reports. These APKs can be retrieved from **AnDroZoo** (https://androzoo.uni.lu/).
 
